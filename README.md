@@ -5,7 +5,7 @@ This is the repo for the Gen-AI project which aims to build and generate SQL que
   
   The repo contains:
   * The 80k data used for used fine-tuning the model.
-	* The code for generating the data in a format acceptable by the model
+	* The code for generating the data in a format acceptable by the model.
 	* The adapter/fine-tuned model folder having weights that can be reused with a Llama-2-7b-chat-hf model to help generate SQL queries.  
  
   Overview:
