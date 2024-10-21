@@ -87,7 +87,7 @@
 	
 
  ##### Finetuning
- ===================================================================================================================================================
+ -------------------------------------------------------------------------------------------------------------------------------
  
  Finetuned the model(NousResearch/Llama-2-7b-chat-hf  model is the model that needs to be trained from the Hugging Face hub) using standard Hugging Face training code and deepspeed with the following hyperparameters:
  
