@@ -1,0 +1,92 @@
+﻿Question No,Question statement,Actual Query ,Query Generated from Prompt(Before Fine Tuning)
+36474,"CREATE TABLE packages (id INT, route_id VARCHAR(5), weight DECIMAL(5,2)); INSERT INTO packages (id, route_id, weight) VALUES (100, 'R01', 12.3), (101, 'R02', 15.6), (102, 'R03', 8.8), (103, 'R04', 20.1), (104, 'R04', 18.5), (105, 'R01', 10.0);  What is the weight of the lightest package on route 'R01'?",,SELECT MIN(weight)\nFROM packages\nWHERE route_id = 'R01'
+11028,,,
+77280,"CREATE TABLE garments (collection VARCHAR(20), garment_name VARCHAR(30), price INT); INSERT INTO garments (collection, garment_name, price) VALUES ('Fall 2021', 'Leather Jacket', 200);  List all the garments with a price over 100 dollars in the 'Fall 2021' collection.",,\nSELECT * FROM garments\nWHERE price > 100 AND collection = 'Fall 2021'
+4554,,,
+11091,"CREATE TABLE attorneys (attorney_id INT, attorney_state VARCHAR(2)); CREATE TABLE attorneys_expenses (attorney_expense_id INT, attorney_id INT, amount DECIMAL(10, 2));  What is the average expense for attorneys in \'New York\'?",,SELECT AVG(amount)\nFROM attorneys_expenses\nWHERE attorney_id IN (SELECT attorney_id FROM attorneys WHERE state = \'New York\')
+25904,,,
+13254,Update player records with a 'VIP' status who have spent over $500 and are from the US,,"UPDATE players
+SET status = 'VIP'
+WHERE total_spent > 500 AND country = 'US'"
+39234,,,"SELECT id, city, price, year_built, 
+       MAX(price) OVER (PARTITION BY city, year_built < 1980 ORDER BY price DESC) as max_price
+FROM properties;"
+79533,,,
+70700,"CREATE TABLE clients (id INT, name TEXT, category TEXT, assets FLOAT); INSERT INTO clients (id, name, category, assets) VALUES (1, 'John Doe', 'High-Risk', 50000.00), (2, 'Jane Smith', 'Low-Risk', 75000.00), (3, 'Alice Johnson', 'High-Risk', 100000.00), (4, 'Bob Brown', 'Low-Risk', 120000.00);  What is the total assets value for clients in the 'High-Risk' category?",SELECT SUM(assets) FROM clients WHERE category = 'High-Risk',"SELECT SUM(assets)
+FROM clients
+WHERE category = 'High-Risk';"
+25976,,,
+34703,"CREATE TABLE Animals (name VARCHAR(50), species VARCHAR(50), location VARCHAR(50)); INSERT INTO Animals (name, species, location) VALUES ('Seal 1', 'Seal', 'Arctic Ocean'), ('Seal 2', 'Seal', 'Arctic Ocean'), ('Walrus 1', 'Walrus', 'Arctic Ocean');  How many seals are in the Arctic Ocean?",SELECT COUNT(*) FROM Animals WHERE species = 'Seal' AND location = 'Arctic Ocean';,SELECT COUNT(*) FROM Animals WHERE species = 'Seal';
+12637," CREATE TABLE Astronauts (ID INT, Name VARCHAR(50), Nationality VARCHAR(50)); INSERT INTO Astronauts VALUES (1, 'Mark Watney', 'USA'), (2, 'Melissa Lewis', 'USA');
+List all astronauts from the USA", SELECT * FROM Astronauts WHERE Nationality = 'USA',SELECT * FROM Astronauts WHERE Nationality = 'USA';
+27108,,,
+50843,,,
+2163,,,
+1290,"CREATE TABLE union_tech (union_id INT, union_name TEXT, industry TEXT, violations INT); INSERT INTO union_tech (union_id, union_name, industry, violations) VALUES (1, 'Union I', 'Tech', 20), (2, 'Union J', 'Tech', 30), (3, 'Union K', 'Tech', 10);  What is the total number of labor rights violations for unions in the tech industry, and how many unions are there in this industry?","SELECT industry, COUNT(*), SUM(violations) FROM union_tech WHERE industry = 'Tech' GROUP BY industry;","SELECT COUNT(*) as num_unions, SUM(violations) as total_violations
+FROM union_tech;"
+69906,"CREATE TABLE MenuItems(menu_item_id INT, item_name VARCHAR(255), last_ordered_date DATE);  Delete menu items that have not been ordered in the last 6 months","DELETE FROM MenuItems WHERE last_ordered_date < DATE_SUB(CURRENT_DATE, INTERVAL 6 MONTH);","DELETE FROM MenuItems
+WHERE last_ordered_date < DATEADD(month, -6, CURRENT_DATE)"
+65203,"CREATE TABLE EventAttendance (event_name VARCHAR(255), attendee_age INT, attendee_gender VARCHAR(50)); INSERT INTO EventAttendance (event_name, attendee_age, attendee_gender) VALUES ('Culture Fest', 30, 'Male'), ('Culture Fest', 42, 'Female'), ('Culture Fest', 35, 'Non-binary'), ('Culture Fest', 50, 'Prefer not to say');  What was the total number of attendees for 'Culture Fest' who identified as 'Non-binary' or 'Prefer not to say'?","SELECT COUNT(*) FROM EventAttendance WHERE event_name = 'Culture Fest' AND attendee_gender IN ('Non-binary', 'Prefer not to say');","SELECT event_name, COUNT(*) as total_non_binary_prefer_not_to_say
+FROM EventAttendance
+GROUP BY event_name
+HAVING SUM(attee_gender='Non-binary' OR attendee_gender='Prefer not to say') > 0"
+15535,"CREATE TABLE Grants (GrantID INT, AwardYear INT, Department VARCHAR(50), Amount DECIMAL(10,2)); INSERT INTO Grants (GrantID, AwardYear, Department, Amount) VALUES (1, 2020, 'Mathematics', 50000), (2, 2021, 'Physics', 60000), (3, 2020, 'Mathematics', 55000), (4, 2021, 'Computer Science', 70000), (5, 2020, 'Computer Science', 80000);  What is the total grant amount awarded to faculty members in the Computer Science department in 2020?",SELECT SUM(Amount) FROM Grants WHERE Department = 'Computer Science' AND AwardYear = 2020;,"SELECT SUM(Amount)
+FROM Grants
+WHERE Department = 'Computer Science' AND AwardYear = 2020"
+2609,,,
+11012,,,
+62134,"CREATE TABLE PolicyAdvocacy (PolicyID INT, PolicyName VARCHAR(50), Cost DECIMAL(5,2), AdvocacyDate DATE); INSERT INTO PolicyAdvocacy VALUES (1, 'Accessible Education Act', 25000.00, '2020-01-01'), (2, 'Inclusive Hiring Policy', 30000.00, '2019-07-01'), (3, 'Disability Discrimination Act', 50000.00, '2018-12-15');  What is the maximum policy advocacy cost in the last two years?",SELECT MAX(Cost) FROM PolicyAdvocacy WHERE AdvocacyDate >= '2019-01-01';,"SELECT MAX(Cost)
+FROM PolicyAdvocacy
+WHERE AdvocacyDate >= DATEADD(year, -2, CURRENT_DATE);"
+77393,,,
+53864,,,
+13433,,,
+59272,,,
+3297,,,
+10986,,,
+14525,,,
+18335,"CREATE TABLE daily_water_consumption (operation TEXT, date DATE, consumption FLOAT); INSERT INTO daily_water_consumption (operation, date, consumption) VALUES ('Operation A', '2021-01-01', 5000), ('Operation B', '2021-01-01', 6000), ('Operation A', '2021-01-02', 5500), ('Operation B', '2021-01-02', 6500);  What is the daily water consumption of the mining operation with the lowest daily water consumption?","SELECT operation, MIN(consumption) FROM daily_water_consumption GROUP BY operation;","SELECT MIN(consumption)
+FROM daily_water_consumption
+GROUP BY operation;
+"
+28002,"CREATE TABLE rural_infrastructure (id INT, project_name VARCHAR(50), sector VARCHAR(50), start_date DATE, end_date DATE, budget FLOAT); INSERT INTO rural_infrastructure (id, project_name, sector, start_date, end_date, budget) VALUES (1, 'Precision Farming Initiative', 'Agriculture', '2019-04-01', '2022-12-31', 500000);  What are the names of all the agricultural innovation projects in the 'rural_infrastructure' table?",SELECT project_name FROM rural_infrastructure WHERE sector = 'Agriculture',"SELECT project_name
+FROM rural_infrastructure
+WHERE sector = 'Agriculture'"
+44719,,,
+70527,"CREATE TABLE EquipmentSales (sale_id INT, equipment_type VARCHAR(50), sale_value FLOAT, sale_date DATE, contract_country VARCHAR(50)); INSERT INTO EquipmentSales (sale_id, equipment_type, sale_value, sale_date, contract_country) VALUES (5, 'Submarines', 60000000, '2022-02-12', 'USA'), (6, 'Drones', 12000000, '2022-04-28', 'China'), (7, 'Missiles', 30000000, '2022-01-10', 'Russia');  What are the military equipment sales for the last six months, grouped by equipment type and country, for contracts with a value greater than $5M?","SELECT equipment_type, contract_country, SUM(sale_value) FROM EquipmentSales WHERE sale_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 6 MONTH) AND CURDATE() GROUP BY equipment_type, contract_country HAVING SUM(sale_value) > 5000000;","SELECT equipment_type, contract_country, SUM(sale_value)
+FROM EquipmentSales
+GROUP BY equipment_type, contract_country
+HAVING SUM(sale_value) > 5000000"
+51166,,,
+23789,,,
+23491,,,
+28359,,,
+46580,"CREATE TABLE network_towers (tower_id INT, location VARCHAR(30), technology VARCHAR(10), investment_cost FLOAT); INSERT INTO network_towers (tower_id, location, technology, investment_cost) VALUES (1, 'New York City', '5G', 500000); INSERT INTO network_towers (tower_id, location, technology, investment_cost) VALUES (2, 'Albany', '4G', 350000);  List all the network towers in the state of New York that support 5G technology and their respective investment costs.","SELECT tower_id, location, investment_cost FROM network_towers WHERE technology = '5G' AND location LIKE 'New York%';","SELECT *
+FROM network_towers
+WHERE technology = '5G'"
+44375,"CREATE TABLE Employees (id INT, name VARCHAR(50), department VARCHAR(50), salary FLOAT); INSERT INTO Employees (id, name, department, salary) VALUES (1, 'John Doe', 'Mining', 75000.00), (2, 'Jane Smith', 'HR', 60000.00), (3, 'Mike Johnson', 'Mining', 80000.00), (4, 'Sara Davis', 'HR', 65000.00);  How many employees work in the Mining department compared to the HR department?","SELECT department, COUNT(*) FROM Employees GROUP BY department;","SELECT COUNT(*)
+FROM Employees
+ORDER BY department;"
+39341,"CREATE TABLE education_programs (id INT, program_name VARCHAR(50), year INT, attendees INT); INSERT INTO education_programs (id, program_name, year, attendees) VALUES (1, 'Wildlife Conservation', 2023, 40), (2, 'Habitat Protection', 2022, 30);  What is the total number of community education programs conducted in '2022' and '2023' with less than 50 attendees?","SELECT COUNT(*) FROM education_programs WHERE year IN (2022, 2023) AND attendees < 50;","SELECT COUNT(*) AS num_programs
+FROM education_programs
+WHERE attendees < 50
+AND year IN (2022, 2023)"
+22836,,,
+78400,"CREATE TABLE WasteGeneration (ID INT PRIMARY KEY, WasteType VARCHAR(50), Sector VARCHAR(50), City VARCHAR(50), Year INT, Quantity DECIMAL(10,2)); INSERT INTO WasteGeneration (ID, WasteType, Sector, City, Year, Quantity) VALUES (1, 'Municipal Solid Waste', 'Commercial', 'Seattle', 2021, 5000.50);  What is the total waste generated by commercial sectors in the city of Seattle in 2021?",SELECT SUM(Quantity) FROM WasteGeneration WHERE Sector = 'Commercial' AND City = 'Seattle' AND Year = 2021,"SELECT SUM(Quantity)
+FROM WasteGeneration
+WHERE Sector = 'Commercial'
+AND City = 'Seattle';"
+15568,,,
+19371,"CREATE TABLE threat_intelligence (id INT, name VARCHAR(255), ip_address VARCHAR(50), threat_level VARCHAR(10)); INSERT INTO threat_intelligence (id, name, ip_address, threat_level) VALUES (1, 'APT28', '192.168.1.1', 'High'), (2, 'APT33', '10.0.0.1', 'Medium'), (3, 'APT34', '172.16.0.1', 'High');  What are the unique threat levels in the 'threat_intelligence' table?",SELECT DISTINCT threat_level FROM threat_intelligence;,"SELECT DISTINCT threat_level
+FROM threat_intelligence;"
+70111,"CREATE TABLE vessels (id INT, name VARCHAR(255), type VARCHAR(255)); CREATE TABLE safety_inspections (id INT, vessel_id INT, inspection_date DATE, result VARCHAR(255));  Update the safety record of 'Seafarer' by adding a new safety inspection with a 'Pass' result on 2022-11-15.","INSERT INTO safety_inspections (id, vessel_id, inspection_date, result) SELECT nextval('safety_inspections_id_seq'::regclass), v.id, '2022-11-15', 'Pass' FROM vessels v WHERE name = 'Seafarer';","UPDATE safety_inspections
+SET result = 'Pass'
+WHERE vessel_id = 1; -- 1 is the id of the 'Seafarer' vessel
+AND inspection_date = '2022-11-15'; -- The date of the latest inspection"
+36086,,,
+8270,"CREATE TABLE Products (id INT PRIMARY KEY, name VARCHAR(255), category VARCHAR(255), supplier_id INT, FOREIGN KEY (supplier_id) REFERENCES Suppliers(id)); CREATE TABLE Trends (id INT PRIMARY KEY, product_id INT, trend VARCHAR(255), popularity INT); INSERT INTO Products (id, name, category, supplier_id) VALUES (1, 'Product A', 'Tops', 1); INSERT INTO Products (id, name, category, supplier_id) VALUES (2, 'Product B', 'Bottoms', 2); INSERT INTO Trends (id, product_id, trend, popularity) VALUES (1, 1, 'Color Blocking', 20); INSERT INTO Trends (id, product_id, trend, popularity) VALUES (2, 2, 'Sustainable Fabrics', 25); INSERT INTO Trends (id, product_id, trend, popularity) VALUES (3, 1, 'Animal Print', 18); INSERT INTO Trends (id, product_id, trend, popularity) VALUES (4, 2, 'Neutrals', 22); What are the products in the 'Sustainable Fabrics' trend?",SELECT Products.name FROM Products INNER JOIN Trends ON Products.id = Trends.product_id WHERE Trends.trend = 'Sustainable Fabrics',"SELECT p.name
+FROM Products p
+JOIN Trends t ON p.id = t.product_id
+WHERE t.trend = 'Sustainable Fabrics';"
+53558,,,
+4111,,,
