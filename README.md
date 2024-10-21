@@ -1,6 +1,6 @@
 **SQLGeneratorSage: Insights from a  LLaMA Model(meta-llama/Llama-2-7b-chat-hf) trained on synthetic SQL generated data**
 
-  This is the repo for the Gen-AI project which aims to build and generate SQL queries based on the prompt provided to the Llama model. Finetuning(mainly using LoRA or QLoRA) was performed to check if there was an improvement in the performance of the model. 
+This is the repo for the Gen-AI project which aims to build and generate SQL queries based on the prompt provided to the Llama model. Finetuning(mainly using LoRA or QLoRA) was performed to check if there was an improvement in the performance of the model. 
 
   
   The repo contains:
