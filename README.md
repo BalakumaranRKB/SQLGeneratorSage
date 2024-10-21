@@ -45,8 +45,7 @@
  
  3\. Model Answer (required)
  
- 4\. See the picture below:
- <img src="images/prompt_format.png" alt="prompt format logo" style="margin-top: 10px;">
+ 4\. See the picture below:<br><br>
  ![prompt format logo](images/prompt_format.png)
 	   
  Keep in mind that this format is used only while fine tuning the LLama model but during other situations(like just using the base model to the check the ouput) it is not mandatory to adhere to this format when trying to provide a user prompt. So in order to extract the required input prior to finetuning we would need regex to achieve this for the 50 random samples that we choose. Keep in mind that we would be extracting/limiting the text excluding the 'Model Answer'. This can be seen in the below code block.
