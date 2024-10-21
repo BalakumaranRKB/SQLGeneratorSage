@@ -12,7 +12,7 @@ This is the repo for the Gen-AI project which aims to build and generate SQL que
 
   In this project, I fine-tuned a Llama-2-7b-chat-hf model with 7 billion parameters on a T4 GPU with high RAM using Google Colab. I noticed that a T4 only has 16 GB of VRAM, which was barely enough to store Llama 2–7b's weights (7b × 2 bytes = 14 GB in FP16). Additionally, I had to consider the overhead due to optimizer states, gradients, and forward activations. This meant that a full fine-tuning was not possible: I needed to use parameter-efficient fine-tuning (PEFT) techniques like LoRA or QLoRA.
   
-  I fine-tuned the model in 4-bit precision to drastically reduce the VRAM usage, which is why I used QLoRA. I leveraged the Hugging Face ecosystem with the transformers, accelerate, peft, trl, and bitsandbytes libraries. I implemented this using code based on Younes Belkada's GitHub Gist. First, I installed and loaded these libraries.
+  I fine-tuned the model in 4-bit precision to drastically reduce the VRAM usage, which is why I used QLoRA. I leveraged the Hugging Face ecosystem with the transformers, accelerate, peft, trl, and bitsandbytes libraries.
 
 
 
