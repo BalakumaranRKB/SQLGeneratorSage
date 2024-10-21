@@ -38,7 +38,7 @@
   <provide folder path here> contains 80,000 rows of data which mainly consists of CREATE TABLE statements and INSERT ROW statements followed by a question. Each row of the dataset is provided in a specific format which is accepted by the model. We will split the dataset into a 80:20 ratio of train and test respectively(setting a seed while doing so). From the test set will randomly select 50 samples and note the output provided by the model before finetuning and note the output of the model after finetuning.
   
   
-  ###### In case of Llama 2, the following prompt template is used for the chat models
+  **In case of Llama 2, the following prompt template is used for the chat models**
   
        1. System Prompt (optional) to guide the model
 	   
