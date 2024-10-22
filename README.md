@@ -35,7 +35,7 @@
  #### Data Release
   --------------------------------------------------------------------------------------------------------------------------------------
   
-  <provide folder path here> contains 80,000 rows of data which mainly consists of CREATE TABLE statements and INSERT ROW statements followed by a question. Each row of the dataset is provided in a specific format which is accepted by the model. We will split the dataset into a 80:20 ratio of train and test respectively(setting a seed while doing so). From the test set will randomly select 50 samples and note the output provided by the model before finetuning and note the output of the model after finetuning.
+  [The dataset used here](data/prompt_structure.txt) contains 80,000 rows of data which mainly consists of CREATE TABLE statements and INSERT ROW statements followed by a question for each datapoint. Each row of the dataset is provided in a specific format which is accepted by the model. We will split the dataset into a 80:20 ratio of train and test respectively(setting a seed while doing so). From the test set will randomly select 50 samples and note the output provided by the model before finetuning and note the output of the model after finetuning.
   
  **In case of Llama 2, the following prompt template is used for the chat models:**
  
@@ -76,14 +76,12 @@
 	   def format_prompt(question):
 	       return f'''<s> [INST] <<SYS>> {default_system_prompt} <</SYS>> {question} [/INST]'''
  ```
-	   
-	                                                                < insert image here >
+	   <br><br>
+	                                                                ![extracted input logo](images/extracted_input_2.png)
 																	
 	
+	The code for collecting outputs prior fine tuning can be found [here](code/Base_Model_Llama_2_7B_chat_training.ipynb)
 	
-	
-	
-
  ##### Finetuning
  -------------------------------------------------------------------------------------------------------------------------------
  
@@ -97,12 +95,12 @@
    | weight_decay  | 0.001|
    
   
-  The fine tuned model is then saved for testing with the test data to see if there was any improvement in the response of the model. The fine tuned model is stored in the <folder>. The code for using this fine tuned model can be found here <provide link to the code>
+  The fine tuned model is then saved for testing with the test data to see if there was any improvement in the response of the model. The fine tuned model is stored in [this folder](fine_tuned_model/.). The code for using this fine tuned model can be found [here](code/Fine_tuned_model_on_test_data.ipynb)
 
 
 
 ##### Results
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-The results of the data(test data) can found here. Prior to finetuning out of 50 randomly picked samples only 24 questions were given the correct response by the model. After finetuning there was an increase in the number of correct results by 15. _**By finetuning using Qlora we observed a 30% increase in improvement in the model**_. Further investigation with respect to various other PEFT techniques can be explored to see if a better improvement can be achieved comapred to this QLORA technique.
+The results of the data(test data) can found [here](data/answers_from_LLM.xlsx) on the 'Prompt_record2_test' sheet. Prior to finetuning the 50 randomly picked samples only 24 questions were given the correct response by the model. After finetuning there was an increase in the number of correct results by 15. _**By finetuning using Qlora we observed a 30% increase in improvement in the model**_. Further investigation with respect to various other PEFT techniques can be explored to see if a better improvement can be achieved comapred to this QLORA technique.
   
