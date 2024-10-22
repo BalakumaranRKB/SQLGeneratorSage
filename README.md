@@ -76,11 +76,11 @@
 	   def format_prompt(question):
 	       return f'''<s> [INST] <<SYS>> {default_system_prompt} <</SYS>> {question} [/INST]'''
  ```
-	   <br><br>
-	                                                                ![extracted input logo](images/extracted_input_2.png)
+ <br><br>
+ ![extracted input logo](images/extracted_input_2.png)
 																	
 	
-	The code for collecting outputs prior fine tuning can be found [here](code/Base_Model_Llama_2_7B_chat_training.ipynb)
+The code for collecting outputs prior fine tuning can be found [here](code/Base_Model_Llama_2_7B_chat_training.ipynb)
 	
  ##### Finetuning
  -------------------------------------------------------------------------------------------------------------------------------
