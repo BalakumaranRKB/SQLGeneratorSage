@@ -95,7 +95,7 @@ The code for collecting outputs prior to finetuning can be found [here](code/Bas
  | weight_decay  | 0.001|
    
   
- The fine tuned model is then saved for testing with the test data to see if there was any improvement in the response of the model. The fine tuned model is stored in [this folder](fine_tuned_model/.). The code for using this fine tuned model can be found [here](code/Fine_tuned_model_on_test_data.ipynb)
+ The fine-tuned model was then saved for testing with the test data to see if there was any improvement in the model's responses. The fine-tuned model is stored in [this folder](fine_tuned_model/.).The weights can be(located in a .bin file) can be found [here](https://drive.google.com/file/d/11dM67AoHNq0cVRMmaxFAiNycJ3u9q3AY/view?usp=sharing). The code for using this fine tuned model can be found [here](code/Fine_tuned_model_on_test_data.ipynb)
 
 
 
