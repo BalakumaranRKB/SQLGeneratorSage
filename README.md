@@ -6,15 +6,15 @@
   This repo contains:
   * The 80k data used for used fine-tuning the model.
   * The code for generating the data in a format acceptable by the model.
-  * The adapter/fine-tuned model folder having weights that can be reused with a Llama-2-7b-chat-hf model to help generate SQL queries.  
+  * The adapter/fine-tuned model folder having weights that can be reused with a Llama-2-7b-chat-hf model to help generate SQL queries.
+  
  
   #### Overview:
   -----------------------------
   In this project, I fine-tuned a Llama-2-7b-chat-hf model with 7 billion parameters on a T4 GPU with high RAM using Google Colab. I noticed that a T4 only has 16 GB of VRAM, which was barely enough to store Llama 2–7b's weights (7b × 2 bytes = 14 GB in FP16). Additionally, I had to consider the overhead due to optimizer states, gradients, and forward activations. This meant that a full fine-tuning was not possible: I needed to use parameter-efficient fine-tuning (PEFT) techniques like LoRA or QLoRA.
   
   I fine-tuned the model in 4-bit precision to drastically reduce the VRAM usage, which is why I used QLoRA. I leveraged the Hugging Face ecosystem with the transformers, accelerate, peft, trl, and bitsandbytes libraries.
-
-
+  
 
   #### About the Dataset used:
   --------------------------------
@@ -32,10 +32,11 @@
 
   Dataset Link: https://huggingface.co/datasets/gretelai/synthetic_text_to_sql
   
+  
  #### Data Release
   --------------------------------------------------------------------------------------------------------------------------------------
   
-  [The dataset used here](data/prompt_structure.txt) contains 80,000 rows of data which mainly consists of CREATE TABLE statements and INSERT ROW statements followed by a question for each datapoint. Each row of the dataset is provided in a specific format which is accepted by the model. We will split the dataset into a 80:20 ratio of train and test respectively(setting a seed while doing so). From the test set will randomly select 50 samples and note the output provided by the model before finetuning and note the output of the model after finetuning.
+  [The dataset used here](data/prompt_structure.txt) contains 80,000 rows of data which mainly consists of CREATE TABLE statements and INSERT ROW statements followed by a question for each datapoint. Each row of the dataset is provided in a specific format which is acceptable by the model. The dataset is split into a 80:20 ratio of train and test respectively(setting a seed while doing so). From the test set 50 samples were randomly selected. The output provided by the model before finetuning and the output of the model after finetuning was noted.
   
  **In case of Llama 2, the following prompt template is used for the chat models:**
  
@@ -49,8 +50,7 @@
  ![prompt format logo](images/prompt_format.png)
 	   
  Keep in mind that this format is used only while fine tuning the LLama model but during other situations(like just using the base model to the check the ouput) it is not mandatory to adhere to this format when trying to provide a user prompt. So in order to extract the required input prior to finetuning we would need regex to achieve this for the 50 random samples that we choose. Keep in mind that we would be extracting/limiting the text excluding the 'Model Answer'. This can be seen in the below code block.
-	   
-	   
+	   	   
 	   
  ```
 	   default_system_prompt="Answer the question to the best of your ability. try atleast answering with whatever SQL knowledge(MS SQL server flavour) that you have. Please consider the context below if applicable"
@@ -80,27 +80,27 @@
  ![extracted input logo](images/extracted_input_2.png)
 																	
 	
-The code for collecting outputs prior fine tuning can be found [here](code/Base_Model_Llama_2_7B_chat_training.ipynb)
+The code for collecting outputs prior to finetuning can be found [here](code/Base_Model_Llama_2_7B_chat_training.ipynb)
 	
  ##### Finetuning
  -------------------------------------------------------------------------------------------------------------------------------
  
- Finetuned the model(NousResearch/Llama-2-7b-chat-hf  model is the model that needs to be trained from the Hugging Face hub) using standard Hugging Face training code and deepspeed with the following hyperparameters:
+ Finetuned the model(NousResearch/Llama-2-7b-chat-hf  model is the model that needs to be trained from the Hugging Face hub) using standard Hugging Face training code with the following hyperparameters:
  
-   | Hyperparamter |Value |
-   | ------------- |:----:|
-   | Learning rate | 2e-4 |
-   | Epochs	       |  1   |
-   | max_seq_length| None |
-   | weight_decay  | 0.001|
+ | Hyperparamter |Value |
+ | ------------- |:----:|
+ | Learning rate | 2e-4 |
+ | Epochs	     |  1   |
+ | max_seq_length| None |
+ | weight_decay  | 0.001|
    
   
-  The fine tuned model is then saved for testing with the test data to see if there was any improvement in the response of the model. The fine tuned model is stored in [this folder](fine_tuned_model/.). The code for using this fine tuned model can be found [here](code/Fine_tuned_model_on_test_data.ipynb)
+ The fine tuned model is then saved for testing with the test data to see if there was any improvement in the response of the model. The fine tuned model is stored in [this folder](fine_tuned_model/.). The code for using this fine tuned model can be found [here](code/Fine_tuned_model_on_test_data.ipynb)
 
 
 
 ##### Results
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-The results of the data(test data) can found [here](data/answers_from_LLM.xlsx) on the 'Prompt_record2_test' sheet. Prior to finetuning the 50 randomly picked samples only 24 questions were given the correct response by the model. After finetuning there was an increase in the number of correct results by 15. _**By finetuning using Qlora we observed a 30% increase in improvement in the model**_. Further investigation with respect to various other PEFT techniques can be explored to see if a better improvement can be achieved comapred to this QLORA technique.
+The results of the data(test data) can found [here](data/answers_from_LLM.xlsx) on the 'Prompt_record2_test' sheet. Prior to finetuning, in the 50 randomly picked samples, only 24 questions were given the correct response by the model. After finetuning there was an increase in the number of correct results by 15. _**By finetuning using Qlora we observed a 30% improvement in the model's performance**_. Further investigation with respect to various other PEFT techniques can be explored to see if better improvement can be achieved compared to this QLoRA technique.
   
