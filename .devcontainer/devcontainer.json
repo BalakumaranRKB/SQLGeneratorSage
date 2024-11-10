@@ -1,7 +1,7 @@
 {
     "hostRequirements": {
         "cpus": 8,
-        "memory": "gb",
+        "memory": "8gb",
         "storage": "32gb"
     },
     "name": "Default Dev Container",
